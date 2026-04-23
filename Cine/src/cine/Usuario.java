@@ -14,20 +14,8 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
-
-    public String getPin() {
-        return pin;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
+    public String getCedula() { return cedula; }
+    public String getPin() { return pin; }
+    public Rol getRol() { return rol; }
+    public String getNombre() { return nombre; }
 }
