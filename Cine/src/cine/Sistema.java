@@ -18,11 +18,11 @@ public class Sistema {
         usuarios[cu++] = new Usuario("Admin", "1", "1234", Rol.ADMIN);
         usuarios[cu++] = new Usuario("Operador", "2", "1111", Rol.OPERADOR);
 
-        peliculas[cp++] = new Pelicula(1, "Batman", "Accion", 120, "PG13", 3000);
-        peliculas[cp++] = new Pelicula(2, "Mario", "Animacion", 90, "G", 2500);
-        peliculas[cp++] = new Pelicula(3, "Avengers", "Accion", 150, "PG13", 3500);
-        peliculas[cp++] = new Pelicula(4, "Spiderman", "Accion", 130, "PG13", 3200);
-        peliculas[cp++] = new Pelicula(5, "Frozen", "Animacion", 100, "G", 2800);
+        peliculas[0] = new Pelicula("P01","Batman","Acción",120,"PG-13",3000);
+        peliculas[1] = new Pelicula("P02","Mario","Animación",100,"TP",2500);
+        peliculas[2] = new Pelicula("P03","Avengers","Acción",150,"PG-13",3500);
+        peliculas[3] = new Pelicula("P04","Spiderman","Acción",130,"PG-13",3200);
+        peliculas[4] = new Pelicula("P05","Jurassic","Aventura",140,"PG-13",2800);
 
         salas[0] = new Sala(1, 6, 6);
         salas[1] = new Sala(2, 6, 6);
@@ -77,13 +77,22 @@ public class Sistema {
     public void verPeliculas() {
         String lista = "=== CARTELERA ===\n\n";
 
-        for (int i = 0; i < cp; i++) {
-            lista += peliculas[i].getCodigo() + " - " + peliculas[i].getTitulo()
-                    + " - ₡" + peliculas[i].getPrecio() + "\n";
-        }
+    for (int i = 0; i < peliculas.length; i++) {
+        
+        if (peliculas[i] != null) {
 
-        JOptionPane.showMessageDialog(null, lista);
+        lista += "Código: " + peliculas[i].codigo + "\n";
+        lista += "Nombre: " + peliculas[i].nombre + "\n";
+        lista += "Género: " + peliculas[i].genero + "\n";
+        lista += "Duración: " + peliculas[i].duracion + " min\n";
+        lista += "Clasificación: " + peliculas[i].clasificacion + "\n";
+        lista += "-------------------------\n";
+        }
     }
+
+    JOptionPane.showMessageDialog(null, lista);
+
+}
 
     public void menuAdmin() {
     int op;

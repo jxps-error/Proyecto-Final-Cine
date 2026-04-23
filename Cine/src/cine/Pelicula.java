@@ -2,23 +2,22 @@ package cine;
 
 public class Pelicula {
 
-    private int codigo;
-    private String titulo;
-    private String genero;
-    private int duracion;
-    private String clasificacion;
-    private double precio;
+    String codigo;
+    String nombre;
+    String genero;
+    int duracion;
+    String clasificacion;
+    double precio;
+    int ventas;
 
-    public Pelicula(int codigo, String titulo, String genero, int duracion, String clasificacion, double precio) {
+    public Pelicula(String codigo, String nombre, String genero, int duracion, String clasificacion, double precio) {
         this.codigo = codigo;
-        this.titulo = titulo;
+        this.nombre = nombre;
         this.genero = genero;
         this.duracion = duracion;
         this.clasificacion = clasificacion;
         this.precio = precio;
+        this.ventas = 0;
     }
 
-    public int getCodigo() { return codigo; }
-    public String getTitulo() { return titulo; }
-    public double getPrecio() { return precio; }
 }
