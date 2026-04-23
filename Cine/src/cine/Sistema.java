@@ -28,7 +28,7 @@ public class Sistema {
         salas[1] = new Sala(2, 6, 6);
     }
 
-    // 🔥 NUEVO INICIO
+    
     public void inicio() {
 
         int opcion = Integer.parseInt(JOptionPane.showInputDialog(
@@ -45,7 +45,7 @@ public class Sistema {
         login(rolSeleccionado);
     }
 
-    // 🔥 LOGIN CON ROL
+    
     public void login(Rol rolEsperado) {
 
         String nombre = JOptionPane.showInputDialog("Usuario:");
@@ -73,7 +73,7 @@ public class Sistema {
         inicio(); // vuelve al inicio
     }
 
-    // 🔥 CARTELERA
+    
     public void verPeliculas() {
         String lista = "=== CARTELERA ===\n\n";
 
@@ -161,24 +161,32 @@ public class Sistema {
     int iP = Integer.parseInt(JOptionPane.showInputDialog("Seleccione pelicula")) - 1;
     int iS = Integer.parseInt(JOptionPane.showInputDialog("Sala (1-2)")) - 1;
 
-    JOptionPane.showMessageDialog(null, salas[iS].mostrar());
+    int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad de asientos:"));
 
-    int f = Integer.parseInt(JOptionPane.showInputDialog("Fila")) - 1;
-    int c = Integer.parseInt(JOptionPane.showInputDialog("Columna")) - 1;
+    String asientosSeleccionados = "";
 
-    if (!salas[iS].ocuparAsiento(f, c)) {
-        JOptionPane.showMessageDialog(null, "Asiento ocupado");
-        return;
+    for (int i = 0; i < cantidad; i++) {
+
+        JOptionPane.showMessageDialog(null, salas[iS].mostrar());
+
+        String asiento = JOptionPane.showInputDialog("Seleccione asiento (Ej: D4)");
+
+        if (!salas[iS].ocuparAsientoTexto(asiento)) {
+            JOptionPane.showMessageDialog(null, "Asiento inválido o ocupado");
+            i--; // repetir intento
+        } else {
+            asientosSeleccionados += asiento.toUpperCase() + " ";
+        }
     }
 
-    // 🔥 NUEVA LOGICA
     Cliente cli = obtenerORegistrarCliente();
 
-    Reserva r = new Reserva(contadorReserva++, cli, peliculas[iP], 1);
+    Reserva r = new Reserva(contadorReserva++, cli, peliculas[iP], cantidad);
     reservas[cr++] = r;
 
-    JOptionPane.showMessageDialog(null, r.generar());
-    }
+    JOptionPane.showMessageDialog(null,
+            r.generar() + "\n\nAsientos: " + asientosSeleccionados);
+}
 
     public void buscar() {
         int num = Integer.parseInt(JOptionPane.showInputDialog("Numero comprobante"));
@@ -204,7 +212,7 @@ public class Sistema {
         }
     }
 
-    // Si no existe → registrar
+    
     JOptionPane.showMessageDialog(null, "Cliente no existe, se registrará");
 
     String nombre = JOptionPane.showInputDialog("Nombre:");

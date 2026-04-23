@@ -21,13 +21,49 @@ public class Sala {
     }
 
     public String mostrar() {
-        String s = "";
-        for (int i = 0; i < asientos.length; i++) {
-            for (int j = 0; j < asientos[i].length; j++) {
-                s += asientos[i][j] == 0 ? "[L]" : "[X]";
-            }
-            s += "\n";
-        }
-        return s;
+
+    String s = "        PANTALLA\n";
+    s += "=========================\n\n";
+
+    // encabezado columnas
+    s += "   ";
+    for (int j = 0; j < asientos[0].length; j++) {
+        s += (j + 1) + "  ";
     }
+    s += "\n";
+
+    for (int i = 0; i < asientos.length; i++) {
+
+        char fila = (char) ('A' + i);
+        s += fila + "  ";
+
+        for (int j = 0; j < asientos[i].length; j++) {
+            s += (asientos[i][j] == 0 ? "O" : "X") + "  ";
+        }
+        s += "\n";
+    }
+
+    s += "\nO = Disponible | X = Ocupado";
+
+    return s;
+}
+    
+    public boolean ocuparAsientoTexto(String asiento) {
+
+    asiento = asiento.toUpperCase();
+
+    int fila = asiento.charAt(0) - 'A';
+    int columna = Integer.parseInt(asiento.substring(1)) - 1;
+
+    if (fila < 0 || fila >= asientos.length || columna < 0 || columna >= asientos[0].length) {
+        return false;
+    }
+
+    if (asientos[fila][columna] == 0) {
+        asientos[fila][columna] = 1;
+        return true;
+    }
+
+    return false;
+}
 }
