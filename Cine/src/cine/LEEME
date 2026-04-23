@@ -1,0 +1,119 @@
+# Sistema de Cine BITACORA
+
+Este archivo funciona como registro del trabajo que hemos venido realizando Jopsen, Jason y Adrian a lo largo de estas semanas. La idea fue ir dejando por escrito los avances conforme se iba construyendo el sistema hasta llegar a la versión final, incluyendo acuerdos, tareas y cosas pendientes entre nosotros.
+
+---
+
+_________________________________________________________________________________________________________//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Se empezó definiendo la idea general del proyecto. Se decidió trabajar con un sistema de cine sencillo que permitiera manejar usuarios y diferenciar accesos segun roles.
+
+Adrian propuso usar Java con NetBeans y mantener la interfaz simple con JOptionPane para no complicarnos. Jopsen estuvo de acuerdo y Jason quedó encargado de revisar ejemplos básicos de login para tener una guía inicial.
+
+---
+
+_________________________________________________________________________________________________________
+
+Se implementó el enum `Rol`, donde se definieron los dos tipos de usuario: ADMIN y OPERADOR.
+
+Jopsen se encargó de esa parte y la dejó lista. Luego Adrian empezó con la clase `Usuario`, aunque al inicio hubo errores con el constructor. Jason ayudó revisando por qué no se estaban asignando bien los valores.
+
+Se acordó que para la siguiente semana Jason iba a revisar el tema de getters y encapsulamiento para dejar la clase bien estructurada.
+
+---
+________________________________________________________________________________________________________
+
+Se empezó a trabajar en la clase `Sistema`. Adrian avanzó bastante en esta parte creando el arreglo de usuarios y el contador.
+
+Al inicio se estaban sobreescribiendo datos, entonces Jopsen detectó el problema y sugirió usar el contador correctamente. Jason quedó encargado de probar que el arreglo no se rompiera al agregar varios usuarios.
+
+También se agregaron usuarios precargados para pruebas.
+
+---
+
+___________________________________________________________________________________________________
+
+Se desarrolló el login. Esta parte tomó tiempo porque no validaba correctamente.
+
+Jason trabajó en el ciclo for y el if compuesto. Adrian ayudó agregando la variable booleana para controlar si el usuario fue encontrado. Antes de eso siempre salía error.
+
+Se dejó como tarea que Jopsen revisara los mensajes que se muestran para que fueran más claros.
+
+---
+
+___________________________________________________________________________________________________
+
+Se implementaron los menús.
+
+Adrian hizo el menú de ADMIN con do while y switch. Jason trabajó el menú de OPERADOR con while. Jopsen estuvo probando ambos menús para verificar que no quedaran en ciclos infinitos.
+
+Se acordó que para la siguiente sesión Jason iba a empezar la parte de registro de usuarios y Adrian iba a encargarse de la visualización.
+
+---
+
+__________________________________________________________________________________________________
+
+Se agregaron las funciones de registrarUsuario, mostrarUsuarios y eliminarUsuario.
+
+Adrian trabajó en registrar usuarios. Jason hizo mostrarUsuarios. Jopsen tomó la parte de eliminarUsuario, que fue la más complicada.
+
+Al inicio no sabíamos cómo eliminar del arreglo, pero Jopsen logró hacerlo corriendo los elementos hacia atrás. Luego Adrian probó varios casos para asegurarse que funcionara bien.
+
+Se dejó pendiente mejorar los mensajes y validar entradas, pero se decidió dejarlo simple por ahora.
+
+---
+
+_________________________________________________________________________________________________
+
+Se hicieron pruebas generales del sistema.
+
+Jason detectó que se podían ingresar datos vacíos, pero como no era un requisito obligatorio se dejó como mejora futura. Adrian revisó que todas las estructuras solicitadas estuvieran presentes.
+
+Jopsen comentó que sería bueno agregar películas reales, pero se decidió no implementarlo todavía para no atrasar la entrega.
+
+---
+
+__________________________________________________________________________________________________
+
+Se dejó el sistema funcionando de forma completa dentro de lo solicitado.
+
+Adrian revisó el flujo general del programa, Jason probó los logins y menús, y Jopsen verificó que no hubiera errores al eliminar usuarios.
+
+Se hicieron pequeños ajustes finales y se dejó listo para entrega.
+
+---
+
+________________________________________________________________________
+
+El sistema permite:
+
+* Iniciar sesión con usuarios precargados
+* Diferenciar accesos segun rol
+* Registrar usuarios
+* Mostrar usuarios
+* Eliminar usuarios
+
+---
+
+COSAS PENDIENTES
+
+* No hay gestión real de películas
+* La reserva es solo una simulación
+* No hay validaciones fuertes
+* Se pueden repetir cédulas
+* No hay base de datos
+
+---
+
+___________________________________________________________________________________
+
+Ya agrengamos las pelis
+y las simulaciones salieron bien
+
+
+
+## Comentario final del grupo
+
+En general el proyecto se logró completar bien. Cada uno fue aportando en distintas partes y se fueron resolviendo los errores conforme iban apareciendo.
+
+A veces costó organizarnos con las tareas, pero igual se logró avanzar. La base del sistema quedó clara y funcional, y se podria mejorar más adelante si se quisiera.
