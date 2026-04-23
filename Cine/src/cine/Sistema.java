@@ -10,7 +10,9 @@ public class Sistema {
     Reserva reservas[] = new Reserva[50];
     Sala salas[] = new Sala[2];
 
-    int cu = 0, cc = 0, cp = 0, cr = 0;
+    Usuario usuarioActual;
+    
+    int cu = 0, cc = 0, cr = 0;
     int contadorReserva = 1;
 
     public Sistema() {
@@ -28,7 +30,6 @@ public class Sistema {
         salas[1] = new Sala(2, 6, 6);
     }
 
-    
     public void inicio() {
 
         int opcion = Integer.parseInt(JOptionPane.showInputDialog(
@@ -40,96 +41,97 @@ public class Sistema {
 
         if (opcion == 3) return;
 
-        Rol rolSeleccionado = (opcion == 1) ? Rol.ADMIN : Rol.OPERADOR;
-
-        login(rolSeleccionado);
+        login((opcion == 1) ? Rol.ADMIN : Rol.OPERADOR);
     }
 
-    
-    public void login(Rol rolEsperado) {
+        public void login(Rol rolEsperado) {
 
-        String nombre = JOptionPane.showInputDialog("Usuario:");
-        String cedula = JOptionPane.showInputDialog("Cedula:");
-        String pin = JOptionPane.showInputDialog("PIN:");
+    String cedula = JOptionPane.showInputDialog("Cedula:");
+    String pin = JOptionPane.showInputDialog("PIN:");
 
-        for (int i = 0; i < cu; i++) {
+    for (int i = 0; i < cu; i++) {
 
-            if (usuarios[i].getCedula().equals(cedula)
-                    && usuarios[i].getPin().equals(pin)
-                    && usuarios[i].getRol() == rolEsperado) {
+        if (usuarios[i].getCedula().equals(cedula)
+                && usuarios[i].getPin().equals(pin)
+                && usuarios[i].getRol() == rolEsperado) {
 
-                JOptionPane.showMessageDialog(null, "Bienvenido " + usuarios[i].getNombre());
+            usuarioActual = usuarios[i];
 
-                if (rolEsperado == Rol.ADMIN)
-                    menuAdmin();
-                else
-                    menuOperador();
+            JOptionPane.showMessageDialog(null, "Bienvenido " + usuarios[i].getNombre());
 
-                return;
-            }
+            if (rolEsperado == Rol.ADMIN)
+                menuAdmin();
+            else
+                menuOperador();
+
+            return;
         }
-
-        JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
-        inicio(); // vuelve al inicio
     }
 
-    
+    JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+    inicio();
+}
+
+
+
     public void verPeliculas() {
-        String lista = "=== CARTELERA ===\n\n";
+
+    String lista = "=== CARTELERA ===\n\n";
 
     for (int i = 0; i < peliculas.length; i++) {
-        
+
         if (peliculas[i] != null) {
 
-        lista += "Código: " + peliculas[i].codigo + "\n";
-        lista += "Nombre: " + peliculas[i].nombre + "\n";
-        lista += "Género: " + peliculas[i].genero + "\n";
-        lista += "Duración: " + peliculas[i].duracion + " min\n";
-        lista += "Clasificación: " + peliculas[i].clasificacion + "\n";
-        lista += "-------------------------\n";
+            lista += "Código: " + peliculas[i].codigo + "\n";
+            lista += "Nombre: " + peliculas[i].nombre + "\n";
+            lista += "Género: " + peliculas[i].genero + "\n";
+            lista += "Duración: " + peliculas[i].duracion + " min\n";
+            lista += "Clasificación: " + peliculas[i].clasificacion + "\n";
+            lista += "Precio: ₡" + peliculas[i].precio + "\n";
+            lista += "-------------------------\n";
         }
     }
 
     JOptionPane.showMessageDialog(null, lista);
-
-}
+    }
 
     public void menuAdmin() {
-    int op;
 
-    do {
-        op = Integer.parseInt(JOptionPane.showInputDialog(
-                "=== ADMIN ===\n"
-                + "1. Ver cartelera\n"
-                + "2. Registrar usuario\n"
-                + "3. Ver usuarios\n"
-                + "4. Ver clientes\n"
-                + "5. Reservar\n"
-                + "6. Buscar comprobante\n"
-                + "7. Salir"
-        ));
-
-        switch (op) {
-            case 1 -> verPeliculas();
-            case 2 -> registrarUsuario();
-            case 3 -> verUsuarios();
-            case 4 -> verClientes();
-            case 5 -> reservar();
-            case 6 -> buscar();
-        }
-
-    } while (op != 7);
-
-    inicio();
-}
-    
-    
-    public void menuOperador() {
         int op;
 
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(
-                    "=== OPERADOR ===\n"
+                    "=== ADMIN (" + usuarioActual.getNombre() + ") ===\n"
+                    + "1. Ver cartelera\n"
+                    + "2. Registrar usuario\n"
+                    + "3. Ver usuarios\n"
+                    + "4. Ver clientes\n"
+                    + "5. Reservar\n"
+                    + "6. Buscar comprobante\n"
+                    + "7. Salir"
+            ));
+
+            switch (op) {
+                case 1 -> verPeliculas();
+                case 2 -> registrarUsuario();
+                case 3 -> verUsuarios();
+                case 4 -> verClientes();
+                case 5 -> reservar();
+                case 6 -> buscar();
+            }
+
+        } while (op != 7);
+
+        inicio();
+    }
+
+    public void menuOperador() {
+
+        int op;
+
+        do {
+            op = Integer.parseInt(JOptionPane.showInputDialog(
+                    "=== OPERADOR (" + usuarioActual.getNombre() + ") ===\n"
                     + "1. Ver cartelera\n"
                     + "2. Reservar\n"
                     + "3. Buscar comprobante\n"
@@ -139,7 +141,7 @@ public class Sistema {
             switch (op) {
                 case 1 -> verPeliculas();
                 case 2 -> reservar();
-                
+                case 3 -> buscar(); // 🔥 ARREGLADO
             }
 
         } while (op != 4);
@@ -148,56 +150,85 @@ public class Sistema {
     }
 
     public void registrarUsuario() {
-        usuarios[cu++] = new Usuario(
-                JOptionPane.showInputDialog("Nombre"),
-                JOptionPane.showInputDialog("Cedula"),
-                JOptionPane.showInputDialog("PIN"),
-                Rol.OPERADOR);
+
+    String nombre = JOptionPane.showInputDialog("Nombre:");
+    String cedula = JOptionPane.showInputDialog("Cedula:");
+    String pin = JOptionPane.showInputDialog("PIN:");
+
+    int opcionRol = Integer.parseInt(JOptionPane.showInputDialog(
+            "Seleccione rol:\n"
+            + "1. Administrador\n"
+            + "2. Operador"
+    ));
+
+    Rol rol;
+
+    if (opcionRol == 1) {
+        rol = Rol.ADMIN;
+    } else {
+        rol = Rol.OPERADOR;
     }
 
-    public void registrarCliente() {
-        clientes[cc++] = new Cliente(
-                JOptionPane.showInputDialog("Nombre"),
-                JOptionPane.showInputDialog("Cedula"),
-                JOptionPane.showInputDialog("Correo"),
-                JOptionPane.showInputDialog("Telefono"));
+    usuarios[cu++] = new Usuario(nombre, cedula, pin, rol);
+
+    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
+    }
+
+    public Cliente obtenerORegistrarCliente() {
+
+        String cedula = JOptionPane.showInputDialog("Cedula cliente:");
+
+        for (int i = 0; i < cc; i++) {
+            if (clientes[i].getCedula().equals(cedula)) {
+                return clientes[i];
+            }
+        }
+
+        String nombre = JOptionPane.showInputDialog("Nombre:");
+        String correo = JOptionPane.showInputDialog("Correo:");
+        String telefono = JOptionPane.showInputDialog("Telefono:");
+
+        Cliente nuevo = new Cliente(nombre, cedula, correo, telefono);
+        clientes[cc++] = nuevo;
+
+        return nuevo;
     }
 
     public void reservar() {
 
-    verPeliculas();
+        verPeliculas();
 
-    int iP = Integer.parseInt(JOptionPane.showInputDialog("Seleccione pelicula")) - 1;
-    int iS = Integer.parseInt(JOptionPane.showInputDialog("Sala (1-2)")) - 1;
+        int iP = Integer.parseInt(JOptionPane.showInputDialog("Seleccione pelicula")) - 1;
+        int iS = Integer.parseInt(JOptionPane.showInputDialog("Sala (1-2)")) - 1;
+        int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad de asientos:"));
 
-    int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad de asientos:"));
+        String asientosSeleccionados = "";
 
-    String asientosSeleccionados = "";
+        for (int i = 0; i < cantidad; i++) {
 
-    for (int i = 0; i < cantidad; i++) {
+            JOptionPane.showMessageDialog(null, salas[iS].mostrar());
 
-        JOptionPane.showMessageDialog(null, salas[iS].mostrar());
+            String asiento = JOptionPane.showInputDialog("Seleccione asiento (Ej: D4)");
 
-        String asiento = JOptionPane.showInputDialog("Seleccione asiento (Ej: D4)");
-
-        if (!salas[iS].ocuparAsientoTexto(asiento)) {
-            JOptionPane.showMessageDialog(null, "Asiento inválido o ocupado");
-            i--; // repetir intento
-        } else {
-            asientosSeleccionados += asiento.toUpperCase() + " ";
+            if (!salas[iS].ocuparAsientoTexto(asiento)) {
+                JOptionPane.showMessageDialog(null, "Asiento inválido");
+                i--;
+            } else {
+                asientosSeleccionados += asiento + " ";
+            }
         }
+
+        Cliente cli = obtenerORegistrarCliente();
+
+        Reserva r = new Reserva(contadorReserva++, cli, peliculas[iP], cantidad, asientosSeleccionados, iS + 1);
+        reservas[cr++] = r;
+
+        JOptionPane.showMessageDialog(null,
+                r.generar());
     }
 
-    Cliente cli = obtenerORegistrarCliente();
-
-    Reserva r = new Reserva(contadorReserva++, cli, peliculas[iP], cantidad);
-    reservas[cr++] = r;
-
-    JOptionPane.showMessageDialog(null,
-            r.generar() + "\n\nAsientos: " + asientosSeleccionados);
-}
-
     public void buscar() {
+
         int num = Integer.parseInt(JOptionPane.showInputDialog("Numero comprobante"));
 
         for (int i = 0; i < cr; i++) {
@@ -209,67 +240,26 @@ public class Sistema {
 
         JOptionPane.showMessageDialog(null, "No existe");
     }
-    
-    public Cliente obtenerORegistrarCliente() {
 
-    String cedula = JOptionPane.showInputDialog("Cedula cliente:");
-
-    // Buscar cliente existente
-    for (int i = 0; i < cc; i++) {
-        if (clientes[i].getCedula().equals(cedula)) {
-            return clientes[i];
-        }
-    }
-
-    
-    JOptionPane.showMessageDialog(null, "Cliente no existe, se registrará");
-
-    String nombre = JOptionPane.showInputDialog("Nombre:");
-    String correo = JOptionPane.showInputDialog("Correo:");
-    String telefono = JOptionPane.showInputDialog("Telefono:");
-
-    Cliente nuevo = new Cliente(nombre, cedula, correo, telefono);
-    clientes[cc++] = nuevo;
-
-    return nuevo;
-}
-    
     public void verUsuarios() {
 
-    if (cu == 0) {
-        JOptionPane.showMessageDialog(null, "No hay usuarios");
-        return;
+        String lista = "";
+
+        for (int i = 0; i < cu; i++) {
+            lista += usuarios[i].getNombre() + " - " + usuarios[i].getRol() + "\n";
+        }
+
+        JOptionPane.showMessageDialog(null, lista);
     }
 
-    String lista = "=== USUARIOS ===\n\n";
-
-    for (int i = 0; i < cu; i++) {
-        lista += usuarios[i].getNombre()
-                + " | Cedula: " + usuarios[i].getCedula()
-                + " | Rol: " + usuarios[i].getRol()
-                + "\n";
-    }
-
-    JOptionPane.showMessageDialog(null, lista);
-}
-    
     public void verClientes() {
 
-    if (cc == 0) {
-        JOptionPane.showMessageDialog(null, "No hay clientes");
-        return;
+        String lista = "";
+
+        for (int i = 0; i < cc; i++) {
+            lista += clientes[i].getNombre() + "\n";
+        }
+
+        JOptionPane.showMessageDialog(null, lista);
     }
-
-    String lista = "=== CLIENTES ===\n\n";
-
-    for (int i = 0; i < cc; i++) {
-        lista += clientes[i].getNombre()
-                + " | Cedula: " + clientes[i].getCedula()
-                + "\n";
-    }
-
-    JOptionPane.showMessageDialog(null, lista);
-}
-    
-    
 }

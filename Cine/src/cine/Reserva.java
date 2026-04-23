@@ -10,11 +10,13 @@ public class Reserva {
     private double iva;
     private double total;
 
-    public Reserva(int numero, Cliente cliente, Pelicula pelicula, int cantidad) {
+    public Reserva(int numero, Cliente cliente, Pelicula pelicula, int cantidad, String asientos, int sala) {
         this.numero = numero;
         this.cliente = cliente;
         this.pelicula = pelicula;
         this.cantidad = cantidad;
+        this.asientos = asientos;
+        this.sala = sala;
         calcular();
     }
 
@@ -24,17 +26,26 @@ public class Reserva {
         total = subtotal + iva;
     }
 
-    public int getNumero() { return numero; }
+    public int getNumero() {
+        return numero;
+    }
 
     public String generar() {
         return "--- SISTEMA CINE ---\n"
                 + "Comprobante: " + numero + "\n\n"
                 + "Cliente: " + cliente.getNombre() + "\n"
-                + "Cedula: " + cliente.getCedula() + "\n\n"
-                + "Pelicula: " + pelicula.getTitulo() + "\n"
+                + "Cedula: " + cliente.getCedula() + "\n"
+                + "Correo: " + cliente.getCorreo() + "\n\n"
+                + "Pelicula: " + pelicula.getNombre() + "\n"
+                + "Sala: " + sala + "\n"
+                + "Asientos: " + asientos + "\n"
                 + "Cantidad: " + cantidad + "\n\n"
                 + "Subtotal: " + subtotal + "\n"
                 + "IVA: " + iva + "\n"
                 + "TOTAL: " + total;
     }
+    
+    private String asientos;
+    private int sala;
+    
 }

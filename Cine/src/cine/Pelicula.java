@@ -2,13 +2,12 @@ package cine;
 
 public class Pelicula {
 
-    String codigo;
-    String nombre;
-    String genero;
-    int duracion;
-    String clasificacion;
-    double precio;
-    int ventas;
+    public String codigo;
+    public String nombre;
+    public String genero;
+    public int duracion;
+    public String clasificacion;
+    public double precio;
 
     public Pelicula(String codigo, String nombre, String genero, int duracion, String clasificacion, double precio) {
         this.codigo = codigo;
@@ -17,7 +16,13 @@ public class Pelicula {
         this.duracion = duracion;
         this.clasificacion = clasificacion;
         this.precio = precio;
-        this.ventas = 0;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
 }

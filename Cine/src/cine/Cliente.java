@@ -16,4 +16,8 @@ public class Cliente {
 
     public String getCedula() { return cedula; }
     public String getNombre() { return nombre; }
+    
+    public String getCorreo() {
+    return correo;
+}
 }
