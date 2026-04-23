@@ -39,10 +39,10 @@ public class Sistema {
             + "3. Salir"
     );
 
-    // 🔥 Validar null (cancelar)
+
     if (opcionStr == null) return;
 
-    // 🔥 Validar que sea 1, 2 o 3
+
     if (!opcionStr.equals("1") && !opcionStr.equals("2") && !opcionStr.equals("3")) {
         JOptionPane.showMessageDialog(null, "Opción inválida");
         inicio();
@@ -155,7 +155,7 @@ public class Sistema {
             switch (op) {
                 case 1 -> verPeliculas();
                 case 2 -> reservar();
-                case 3 -> buscar(); // 🔥 ARREGLADO
+                case 3 -> buscar(); 
             }
 
         } while (op != 4);
