@@ -32,16 +32,30 @@ public class Sistema {
 
     public void inicio() {
 
-        int opcion = Integer.parseInt(JOptionPane.showInputDialog(
-                "=== BIENVENIDO A CINE PELICULEANDO ===\n\n"
-                + "1. Administrador\n"
-                + "2. Operador\n"
-                + "3. Salir"
-        ));
+    String opcionStr = JOptionPane.showInputDialog(
+            "=== BIENVENIDO A CINE PELICULEANDO ===\n\n"
+            + "1. Administrador\n"
+            + "2. Operador\n"
+            + "3. Salir"
+    );
 
-        if (opcion == 3) return;
+    // 🔥 Validar null (cancelar)
+    if (opcionStr == null) return;
 
-        login((opcion == 1) ? Rol.ADMIN : Rol.OPERADOR);
+    // 🔥 Validar que sea 1, 2 o 3
+    if (!opcionStr.equals("1") && !opcionStr.equals("2") && !opcionStr.equals("3")) {
+        JOptionPane.showMessageDialog(null, "Opción inválida");
+        inicio();
+        return;
+    }
+
+    int opcion = Integer.parseInt(opcionStr);
+
+    if (opcion == 3) return;
+
+    Rol rolSeleccionado = (opcion == 1) ? Rol.ADMIN : Rol.OPERADOR;
+
+    login(rolSeleccionado);
     }
 
         public void login(Rol rolEsperado) {
